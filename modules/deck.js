@@ -42,13 +42,48 @@ class Deck {
     this.__dealtCards = []
   }
   
-  getCards() {
+  /**
+   * Returns a copy of dealt/undealt cards array. It is a copy to ensure
+   * it's immutable
+   * @param {{dealt: boolean}}
+   * @returns {Array}
+   * @throws {Error} if param is not a boolean
+   */
+  getCards({dealt = false} = {}) {
+    if (typeof dealt !== 'boolean') {
+      throw new Error('Parameter dealt must be a boolean')
+    }
+    return dealt ?
+      [].concat(this.__dealtCards) :
+      [].concat(this.__undealtCards)
   }
   
+  /**
+   * Combines the card array and randomize. Reset the undealt array
+   * @returns {undefined}
+   */
   shuffle() {
+    this.__undealtCards = [].concat(
+      this.__undealtCards,
+      this.__dealtCards
+    ).sort(randomArraySortFunction)
+    this.__dealtCards = []
   }
   
+  /**
+   * Deals a card, also records it in the dealt array (for record keeping)
+   * @returns {string}
+   * @throws {Error} if no more cards left
+   */
   deal() {
+    if (this.__undealtCards.length === 0) {
+      throw new Error('All cards are dealt!')
+    }
+    
+    const nextCard = this.__undealtCards.shift()
+
+    this.__dealtCards.push(nextCard)
+    return nextCard
   }
 }
 
