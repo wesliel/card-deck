@@ -80,7 +80,7 @@ class Deck {
       throw new Error('All cards are dealt!')
     }
     
-    const nextCard = this.__undealtCards.shift()
+    const nextCard = this.__undealtCards.pop()
 
     this.__dealtCards.push(nextCard)
     return nextCard

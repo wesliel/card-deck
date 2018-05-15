@@ -71,11 +71,11 @@ describe('Deck', function() {
 
   describe('#deal()', function() {
 
-    it('should deal the first card from the deck', function() {
+    it('should deal top card from the deck', function() {
       const cards = deck.getCards()
       const card = deck.deal()
 
-      expect(cards[0]).to.equal(card)
+      expect(cards.pop()).to.equal(card)
     })
 
     describe('after all cards are dealt,', function() {
